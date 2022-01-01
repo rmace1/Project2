@@ -8,7 +8,15 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 //https://crunchify.com/java-properties-files-how-to-update-config-properties-file-in-java/
+/*
 
+content of config.txt file inside resources folder
+
+jdbcConnection=
+jdbcUserName=
+jdbcPassword=
+jdbcDbName=
+* */
 public class PropertyConfig {
     private static Properties config = new Properties();
     private static String configName = "./src/main/resources/config.txt";
