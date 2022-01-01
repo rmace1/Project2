@@ -1,5 +1,6 @@
 package com.revature.Project2.controllers;
 
+import com.revature.Project2.models.JsonResponse;
 import com.revature.Project2.models.User;
 import com.revature.Project2.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,6 @@ public class UserController {
         return this.userService.getOneUser(userId);
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user){
-        return this.userService.createUser(user);
-    }
-
     @DeleteMapping("{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Integer id){
         ResponseEntity<String> responseEntity;
@@ -46,5 +42,14 @@ public class UserController {
         }
 
         return responseEntity;
+    }
+
+    @PostMapping
+    public JsonResponse registerUser(@RequestBody User requestBody){
+        User user = this.userService.createUser(requestBody);
+        if(user == null) {
+            return new JsonResponse("username already exists in system", null);
+        }
+        return new JsonResponse("user created", user);
     }
 }

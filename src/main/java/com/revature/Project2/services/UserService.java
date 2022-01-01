@@ -13,6 +13,9 @@ public class UserService {
     private UserRepo userRepo;
 
     public User createUser(User user){
+        User userFromDb = this.userRepo.findByUsername(user.getUserName());
+        if(userFromDb != null)
+            return null;
         return this.userRepo.save(user);
     }
 
@@ -29,5 +32,14 @@ public class UserService {
         if(this.userRepo.findById(userId).equals(null))
             return true;
         return false;
+    }
+
+    public User validateCredentials(User user){
+        User userFromDb = this.userRepo.findByUsername(user.getUserName());
+        if(userFromDb == null)
+            return null;
+        if(!userFromDb.getPassword().equals(user.getPassword()))
+            return null;
+        return userFromDb;
     }
 }
