@@ -4,6 +4,8 @@ import com.revature.Project2.models.User;
 import com.revature.Project2.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -18,6 +20,12 @@ public class UserService {
         User userFromDb = this.userRepo.findByUsername(user.getUserName());
         if(userFromDb != null)
             return null;
+
+        //http://www.jasypt.org/index.html
+        StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+        String encryptedPass = encryptor.encryptPassword(user.getPassword());
+        user.setPassword(encryptedPass);
+
         return this.userRepo.save(user);
     }
 
@@ -38,10 +46,15 @@ public class UserService {
 
     public User validateCredentials(User user){
         User userFromDb = this.userRepo.findByUsername(user.getUserName());
+
         if(userFromDb == null)
             return null;
-        if(!userFromDb.getPassword().equals(user.getPassword()))
+
+        StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+        //checks to see if password matches encrypted password.
+        if(!encryptor.checkPassword(user.getPassword(), userFromDb.getPassword()))
             return null;
+
         return userFromDb;
     }
 }
