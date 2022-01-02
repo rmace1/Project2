@@ -19,8 +19,10 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @OneToMany(mappedBy = "originalPost")
     private Integer id;
 
+    @Column(nullable = false)
     private String message;
 
     private String picture;
@@ -30,10 +32,10 @@ public class Post {
 
     private Integer likes;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private User author;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Post originalPost;
 
 
