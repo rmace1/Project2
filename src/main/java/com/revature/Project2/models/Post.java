@@ -30,10 +30,10 @@ public class Post {
 
     private Integer likes;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User author;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Post originalPost;
 
 
