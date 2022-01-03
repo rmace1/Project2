@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +18,6 @@ import java.sql.Timestamp;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@OneToMany(mappedBy = "author")
     /*@JoinTable(
             name = "users_posts",
             joinColumns = @JoinColumn(name = "users_id"),
@@ -34,4 +35,16 @@ public class User {
     private String profilePic;
     @Column(nullable = false)
     private String password;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "userPost",
+            joinColumns = {
+                    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
+            }
+    )
+    private List<Post> likes = new ArrayList<>();
 }
