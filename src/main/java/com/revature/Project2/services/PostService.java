@@ -37,4 +37,11 @@ public class PostService {
     public List<Post> getAllPostsGivenPostId(Integer postId){
         return this.postRepo.findAllPostById(postId);
     }
+
+    public boolean delete(Integer postId){
+        this.postRepo.deleteById(postId);
+        if(this.postRepo.findById(postId).equals(null))
+            return true;
+        return false;
+    }
 }
