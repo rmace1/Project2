@@ -2,7 +2,6 @@ package com.revature.Project2.services;
 
 import com.revature.Project2.models.Post;
 import com.revature.Project2.repository.PostRepo;
-import com.revature.Project2.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +9,14 @@ import java.util.List;
 
 @Service
 public class PostService {
-    @Autowired
+
+
     private PostRepo postRepo;
+
+    @Autowired
+    public PostService(PostRepo postRepo){
+        this.postRepo = postRepo;
+    }
 
     public Post createPost(Post post){
         return this.postRepo.save(post);
@@ -26,10 +31,10 @@ public class PostService {
     }
 
     public List<Post> getAllPostsGivenUserId(Integer userId){
-        return this.postRepo.findAllByUserId(userId);
+        return this.postRepo.findAllUserById(userId);
     }
 
     public List<Post> getAllPostsGivenPostId(Integer postId){
-        return this.postRepo.findAllByPostId(postId);
+        return this.postRepo.findAllPostById(postId);
     }
 }

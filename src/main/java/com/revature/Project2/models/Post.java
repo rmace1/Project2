@@ -19,7 +19,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToMany(mappedBy = "originalPost")
+//    @OneToMany(mappedBy = "originalPost")
     private Integer id;
 
     @Column(nullable = false)

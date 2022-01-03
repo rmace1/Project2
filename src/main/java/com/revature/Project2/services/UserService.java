@@ -17,7 +17,7 @@ public class UserService {
     private UserRepo userRepo;
 
     public User createUser(User user){
-        User userFromDb = this.userRepo.findByUsername(user.getUserName());
+        User userFromDb = this.userRepo.findByUserName(user.getUserName());
         if(userFromDb != null)
             return null;
 
@@ -45,7 +45,7 @@ public class UserService {
     }
 
     public User validateCredentials(User user){
-        User userFromDb = this.userRepo.findByUsername(user.getUserName());
+        User userFromDb = this.userRepo.findByUserName(user.getUserName());
 
         if(userFromDb == null)
             return null;

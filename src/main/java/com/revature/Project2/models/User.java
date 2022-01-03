@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToMany(mappedBy = "author")
+    //@OneToMany(mappedBy = "author")
     /*@JoinTable(
             name = "users_posts",
             joinColumns = @JoinColumn(name = "users_id"),

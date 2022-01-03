@@ -11,12 +11,12 @@ import java.util.List;
 
 @RequestMapping(value = "post")
 @RestController
-@CrossOrigin(value = "http://localhost:9000")
+@CrossOrigin(value = "http://localhost:4200")
 public class PostController {
     private PostService postService;
 
     @Autowired
-    public PostController(UserService userService){
+    public PostController(PostService postService){
         this.postService = postService;
     }
 

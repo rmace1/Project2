@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping(value = "session")
-@CrossOrigin(origins = "http://localhost:9000", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class SessionController {
     private UserService userService;
 
