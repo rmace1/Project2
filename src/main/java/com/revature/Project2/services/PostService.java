@@ -47,4 +47,11 @@ public class PostService {
         postRepo.deleteById(postId);
         return true;
     }
+
+    public boolean delete(Integer postId){
+        this.postRepo.deleteById(postId);
+        if(this.postRepo.findById(postId).equals(null))
+            return true;
+        return false;
+    }
 }
