@@ -31,10 +31,20 @@ public class PostService {
     }
 
     public List<Post> getAllPostsGivenUserId(Integer userId){
-        return this.postRepo.findAllUserById(userId);
+        return this.postRepo.findAllUserByauthorId(userId);
     }
 
     public List<Post> getAllPostsGivenPostId(Integer postId){
-        return this.postRepo.findAllPostById(postId);
+        return this.postRepo.findAllPostByIdOroriginalPostId(postId);
+    }
+
+    public Post updatePost(Post post){
+
+        return postRepo.save(post);
+    }
+
+    public Boolean deletePost(Integer postId){
+        postRepo.deleteById(postId);
+        return true;
     }
 }

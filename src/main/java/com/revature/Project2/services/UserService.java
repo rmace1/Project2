@@ -13,8 +13,13 @@ import java.util.List;
 @Service
 @Transactional
 public class UserService {
-    @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+
+    public UserService(UserRepo userRepo){
+        this.userRepo = userRepo;
+    }
 
     public User createUser(User user){
         User userFromDb = this.userRepo.findByUserName(user.getUserName());
@@ -37,10 +42,21 @@ public class UserService {
         return this.userRepo.findById(userId).orElse(null);
     }
 
+    public User updateUser(User user){
+
+        StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+        String encryptedPass = encryptor.encryptPassword(user.getPassword());
+        user.setPassword(encryptedPass);
+
+        return userRepo.save(user);
+    }
+
     public boolean delete(Integer userId){
         this.userRepo.deleteById(userId);
-        if(this.userRepo.findById(userId).equals(null))
+        User user = this.userRepo.findById(userId).orElse(null);
+        if(user == null) {
             return true;
+        }
         return false;
     }
 
@@ -52,9 +68,9 @@ public class UserService {
 
         StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
         //checks to see if password matches encrypted password.
-        if(!encryptor.checkPassword(user.getPassword(), userFromDb.getPassword()))
+        if(!encryptor.checkPassword(user.getPassword(), userFromDb.getPassword())) {
             return null;
-
+        }
         return userFromDb;
     }
 }

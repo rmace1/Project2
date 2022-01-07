@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,4 +48,16 @@ public class User {
             }
     )
     private List<Post> likes = new ArrayList<>();
+
+    @Transient
+    private File profileImage;
+
+
+    public User(String firstName, String lastName, String userName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
 }

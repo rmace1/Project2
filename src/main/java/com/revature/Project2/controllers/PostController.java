@@ -31,7 +31,10 @@ public class PostController {
     }
 
     @PostMapping
-    public Post createPost(@RequestBody Post post){return this.postService.createPost(post);}
+    public Post createPost(@RequestBody Post post){
+        //TODO: upload post pic to S3 and DB
+        return this.postService.createPost(post);
+    }
 
     @GetMapping("alluser/{userId}")
     public List<Post> getAllPostsGivenUserId(@PathVariable Integer userId){

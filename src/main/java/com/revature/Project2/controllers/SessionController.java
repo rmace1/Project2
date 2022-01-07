@@ -19,7 +19,7 @@ public class SessionController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping    //TODO: Use UserDTO instead of User object
     public JsonResponse login(HttpSession httpSession, @RequestBody User requestBody){
 
         User user = this.userService.validateCredentials(requestBody);

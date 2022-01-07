@@ -6,9 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import java.io.File;
 import java.sql.Timestamp;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,6 +30,7 @@ public class Post {
     private String picture;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm az")
+    @Column(columnDefinition = "TIMESTAMP default now()")
     private Timestamp timePosted;
 
     private Integer likes;
@@ -34,13 +38,16 @@ public class Post {
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private User author;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   // @JoinColumn(name = "original_post_id")
     private Post originalPost;
 
+    //@OneToMany
+   // private List<Post> comments;
 
-
-
-
-
-
+    public Post(Integer id, String message, User author) {
+        this.id = id;
+        this.message = message;
+        this.author = author;
+    }
 }
