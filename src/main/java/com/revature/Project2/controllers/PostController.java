@@ -42,7 +42,7 @@ public class PostController {
     }
 
     @GetMapping("all-original")
-    public List<Post> getAllOriginalPosts(@PathVariable Integer postId){
+    public List<Post> getAllOriginalPosts(){
         return this.postService.getAllOriginalPosts();
     }
 

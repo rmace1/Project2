@@ -3,6 +3,8 @@ package com.revature.Project2.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,9 +39,11 @@ public class Post {
     private Integer likes;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"likes"})
+
     private User author;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"author", "comments"})
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "original_post_id")
     private Post originalPost;
