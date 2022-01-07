@@ -36,7 +36,7 @@ public class PostController {
         return this.postService.createPost(post);
     }
 
-    @GetMapping("{userId}/alluser")
+    @GetMapping("{userId}/all-original-user")
     public List<Post> getAllPostsGivenUserId(@PathVariable Integer userId){
         return this.postService.getAllPostsGivenUserId(userId);
     }
