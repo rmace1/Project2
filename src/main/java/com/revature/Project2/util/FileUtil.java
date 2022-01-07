@@ -60,15 +60,15 @@ public class FileUtil {
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
                 .build();
 
-        String imageURL = "SocialNetwork/" + user.getUserName() + "/" + multipartFile.getName();
+        String imageURL = "SocialNetwork/" + user.getUserName() + "/" + multipartFile.getOriginalFilename();
 
         try{
-            s3Client.putObject(new PutObjectRequest(bucketName, imageURL, multipartFile.getInputStream(), new ObjectMetadata()));
+            s3Client.putObject(new PutObjectRequest(bucketName, imageURL,
+                    multipartFile.getInputStream(), new ObjectMetadata()));
         } catch (Exception e) {
             e.printStackTrace();  //TODO: Logging
         }
-
-        return imageURL;
+        return "https://jwa-p2.s3.us-east-2.amazonaws.com/" + imageURL;
     }
 
 }
