@@ -14,6 +14,6 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
     List<Post> findAllUserByauthorId(Integer id);
 
     //https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-introduction-to-query-methods/
-    @Query(value = "SELECT * FROM posts p WHERE p.original_post_id = :id OR p.id = :id", nativeQuery = true)
-    List<Post> findAllPostByIdOroriginalPostId(@Param("id")Integer id);
+    @Query(value = "SELECT * FROM posts p WHERE p.original_post_id IS null", nativeQuery = true)
+    List<Post> findAllOriginalPosts();
 }

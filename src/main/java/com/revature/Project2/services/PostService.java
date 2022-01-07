@@ -34,8 +34,8 @@ public class PostService {
         return this.postRepo.findAllUserByauthorId(userId);
     }
 
-    public List<Post> getAllPostsGivenPostId(Integer postId){
-        return this.postRepo.findAllPostByIdOroriginalPostId(postId);
+    public List<Post> getAllOriginalPosts(){
+        return this.postRepo.findAllOriginalPosts();
     }
 
     public Post updatePost(Post post){

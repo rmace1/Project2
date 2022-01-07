@@ -2,6 +2,7 @@ package com.revature.Project2.models;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,12 +39,13 @@ public class Post {
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private User author;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-   // @JoinColumn(name = "original_post_id")
+    @JoinColumn(name = "original_post_id")
     private Post originalPost;
 
-    //@OneToMany
-   // private List<Post> comments;
+    @OneToMany(mappedBy = "originalPost")
+    private List<Post> comments;
 
     public Post(Integer id, String message, User author) {
         this.id = id;

@@ -1,9 +1,7 @@
 package com.revature.Project2.controllers;
 
 import com.revature.Project2.models.Post;
-import com.revature.Project2.models.User;
 import com.revature.Project2.services.PostService;
-import com.revature.Project2.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +41,9 @@ public class PostController {
         return this.postService.getAllPostsGivenUserId(userId);
     }
 
-    @GetMapping("{postId}/allpost")
-    public List<Post> getAllPostsGivenPostId(@PathVariable Integer postId){
-        return this.postService.getAllPostsGivenPostId(postId);
+    @GetMapping("all-original")
+    public List<Post> getAllOriginalPosts(@PathVariable Integer postId){
+        return this.postService.getAllOriginalPosts();
     }
 
     @DeleteMapping("{postId}")

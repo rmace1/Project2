@@ -83,14 +83,14 @@ class PostServiceTest {
     }
 
     @Test
-    void getAllPostsGivenPostId() {
+    void getAllOriginalPosts() {
         User user = new User("Richard", "Mace", "rmace", "rmace@revnet.com", "pass123");
         List<Post> posts = new ArrayList<>();
         posts.add(new Post(1, "First post!", user));
         posts.add(new Post(2, "Second post!", user));
         posts.add(new Post(3, "Third post!", user));
 
-        Mockito.when(postRepo.findAllPostByIdOroriginalPostId(posts.get(0).getId())).thenReturn(posts);
+        Mockito.when(postRepo.findAllOriginalPosts()).thenReturn(posts);
     }
 
     @Test
