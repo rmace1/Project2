@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.revature.Project2.models.User;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -18,18 +19,20 @@ import java.util.Properties;
 
 public class FileUtil {
 
+    private static Logger log = Logger.getLogger(FileUtil.class);
 
-    public static File convertToFile(MultipartFile multipartFile){
+   /* public static File convertToFile(MultipartFile multipartFile){
         File file = new File("./src/main/resources", multipartFile.getOriginalFilename());
         //converts from Multipart File to File
         try {
             FileUtils.writeByteArrayToFile(file, multipartFile.getBytes());
+            log.info(multipartFile.getName() + " has beeen uploaded to S3 bucket.");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
         return file;
-    }
+    }*/
 
     public static String uploadToS3(User user, MultipartFile multipartFile) {
         Properties config = new Properties();
@@ -37,7 +40,7 @@ public class FileUtil {
         try {
             config.load(new FileInputStream(configName));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         final String awsID = config.getProperty("AWSPass");
         final String secretKey = config.getProperty("AWSSecretPass");
@@ -65,8 +68,9 @@ public class FileUtil {
         try{
             s3Client.putObject(new PutObjectRequest(bucketName, imageURL,
                     multipartFile.getInputStream(), new ObjectMetadata()));
+            log.info(multipartFile.getName() + " has beeen uploaded to S3 bucket.");
         } catch (Exception e) {
-            e.printStackTrace();  //TODO: Logging
+            log.error(e);
         }
         return "https://jwa-p2.s3.us-east-2.amazonaws.com/" + imageURL;
     }

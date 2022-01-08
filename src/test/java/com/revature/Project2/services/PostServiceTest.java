@@ -91,6 +91,10 @@ class PostServiceTest {
         posts.add(new Post(3, "Third post!", user));
 
         Mockito.when(postRepo.findAllOriginalPosts()).thenReturn(posts);
+
+        List<Post> actual = postService.getAllOriginalPosts();
+
+        assertEquals(posts, actual);
     }
 
     @Test

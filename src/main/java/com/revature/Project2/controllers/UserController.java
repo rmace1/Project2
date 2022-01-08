@@ -90,7 +90,7 @@ public class UserController {
         User newUser = new User(firstName, lastName, userName, email, password);
 
         //TODO: make sure image location is saved to DB
-        newUser.setProfileImage(FileUtil.convertToFile(file));
+        //newUser.setProfileImage(FileUtil.convertToFile(file));
         newUser.setProfilePic(FileUtil.uploadToS3(newUser, file));
 
         User user = this.userService.createUser(newUser);
