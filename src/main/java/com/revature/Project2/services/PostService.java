@@ -4,6 +4,7 @@ import com.revature.Project2.models.Post;
 import com.revature.Project2.repository.PostRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class PostService {
         return this.postRepo.findAllOriginalPosts();
     }
 
-    public Post updatePost(Post post){
+    public Post updatePost(Post post, MultipartFile multipartFile){
 
         return postRepo.save(post);
     }

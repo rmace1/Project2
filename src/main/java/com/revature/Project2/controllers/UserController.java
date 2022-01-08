@@ -74,7 +74,7 @@ public class UserController {
         user.setPassword(newPass);
 
         //reset password and send email
-        userService.updateUser(user);
+        userService.updateUser(user, file);
         Email.sendEmail(user.getEmail(), "Password Reset",
                 "Your password has been reset to \"" + newPass + "\"");
         UserDTO userDto = new UserDTO(user);
@@ -89,8 +89,6 @@ public class UserController {
 
         User newUser = new User(firstName, lastName, userName, email, password);
 
-        //TODO: make sure image location is saved to DB
-        //newUser.setProfileImage(FileUtil.convertToFile(file));
         newUser.setProfilePic(FileUtil.uploadToS3(newUser, file));
 
         User user = this.userService.createUser(newUser);
@@ -100,5 +98,17 @@ public class UserController {
         return ResponseEntity.ok(new JsonResponse("user created", user));
     }
 
+    @PutMapping
+    public ResponseEntity<JsonResponse> updateUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName,
+                                                   @RequestParam String lastName , @RequestParam String userName,
+                                                   @RequestParam String email, @RequestParam(required = false) String password,
+                                                   @RequestParam(value = "profilePic", required = false) String profileImage) {
+        User newUser = new User(firstName, lastName, userName, email, password);
+        newUser.setProfilePic(profileImage);
+        userService.updateUser(newUser, file);
+
+
+        return ResponseEntity.ok(new JsonResponse("user created", null));
+    }
     //TODO: Add endpoint to add a post to the user's likes list
 }

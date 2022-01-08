@@ -2,6 +2,7 @@ package com.revature.Project2.controllers;
 
 import com.revature.Project2.models.JsonResponse;
 import com.revature.Project2.models.User;
+import com.revature.Project2.models.UserDTO;
 import com.revature.Project2.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class SessionController {
         this.userService = userService;
     }
 
-    @PostMapping    //TODO: Use UserDTO instead of User object
+    @PostMapping
     public JsonResponse login(HttpSession httpSession, @RequestBody User requestBody){
 
         User user = this.userService.validateCredentials(requestBody);
@@ -28,23 +29,23 @@ public class SessionController {
             return new JsonResponse("invalid username or password", null);
         }
 
-        httpSession.setAttribute("user-session", user.getId());
+        httpSession.setAttribute("user-session", new UserDTO(user));
 
-        return new JsonResponse("login successful", user);
+        return new JsonResponse("login successful", new UserDTO(user));
 
     }
 
     @GetMapping
     public JsonResponse checkSession(HttpSession httpSession){
-        Integer userId = (Integer) httpSession.getAttribute("user-session");
+        UserDTO userDTO = (UserDTO) httpSession.getAttribute("user-session");
 
-        if(userId == null)
+        if(userDTO == null)
             return new JsonResponse("no session found", null);
 
 
-        User user = this.userService.getOneUser(userId);
+        User user = this.userService.getOneUser(userDTO.getId());
 
-        return new JsonResponse("session found", user);
+        return new JsonResponse("session found", new UserDTO(user));
 
     }
 

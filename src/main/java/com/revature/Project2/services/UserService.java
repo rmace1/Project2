@@ -2,9 +2,11 @@ package com.revature.Project2.services;
 
 import com.revature.Project2.models.User;
 import com.revature.Project2.repository.UserRepo;
+import com.revature.Project2.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.transaction.Transactional;
@@ -42,11 +44,25 @@ public class UserService {
         return this.userRepo.findById(userId).orElse(null);
     }
 
-    public User updateUser(User user){
+    public User updateUser(User user, MultipartFile multipartFile){
+        User userFromDb = userRepo.findByUserName(user.getUserName());
+
+        if(userFromDb == null){
+            return null;
+        }
+
+        //if a file is uploaded as part of the user update
+        if(multipartFile != null){
+            user.setProfilePic(FileUtil.uploadToS3(user, multipartFile));
+        }
 
         StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
-        String encryptedPass = encryptor.encryptPassword(user.getPassword());
-        user.setPassword(encryptedPass);
+        if(user.getPassword() != null) {
+            String encryptedPass = encryptor.encryptPassword(user.getPassword());
+            user.setPassword(encryptedPass);
+        }else{
+            user.setPassword(userFromDb.getPassword());
+        }
 
         return userRepo.save(user);
     }

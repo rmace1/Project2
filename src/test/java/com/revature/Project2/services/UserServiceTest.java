@@ -98,7 +98,7 @@ class UserServiceTest {
 
         Mockito.when(userRepo.save(expectedResult)).thenReturn(expectedResult);
 
-        User actual = userService.updateUser(expectedResult);
+        User actual = userService.updateUser(expectedResult, null);
 
         assertEquals(expectedResult, actual);
     }
