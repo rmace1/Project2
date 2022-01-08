@@ -1,6 +1,8 @@
 package com.revature.Project2.services;
 
+import com.revature.Project2.models.Post;
 import com.revature.Project2.models.User;
+import com.revature.Project2.repository.PostRepo;
 import com.revature.Project2.repository.UserRepo;
 import com.revature.Project2.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,12 @@ import java.util.List;
 @Transactional
 public class UserService {
     private UserRepo userRepo;
+    private PostRepo postRepo;
 
     @Autowired
-
-    public UserService(UserRepo userRepo){
+    public UserService(UserRepo userRepo, PostRepo postRepo){
         this.userRepo = userRepo;
+        this.postRepo = postRepo;
     }
 
     public User createUser(User user){
@@ -88,5 +91,15 @@ public class UserService {
             return null;
         }
         return userFromDb;
+    }
+
+    @Transactional
+    public void addLike(User user, Post post){
+        if(!user.getLikes().contains(post)) {
+            user.getLikes().add(post);
+            userRepo.save(user);
+            post.setLikes(post.getLikes() + 1);
+            postRepo.save(post);
+        }
     }
 }

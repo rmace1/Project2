@@ -1,6 +1,7 @@
 package com.revature.Project2.services;
 
 import com.revature.Project2.models.User;
+import com.revature.Project2.repository.PostRepo;
 import com.revature.Project2.repository.UserRepo;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.jupiter.api.AfterEach;
@@ -18,10 +19,11 @@ class UserServiceTest {
 
     UserService userService;
     UserRepo userRepo = Mockito.mock(UserRepo.class);
+    PostRepo postRepo = Mockito.mock(PostRepo.class);
 
     @BeforeEach
     void setUp() {
-        this.userService = new UserService(userRepo);
+        this.userService = new UserService(userRepo, postRepo);
     }
 
     @AfterEach

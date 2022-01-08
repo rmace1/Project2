@@ -36,11 +36,11 @@ public class Post {
     @Column(columnDefinition = "TIMESTAMP default now()")
     private Timestamp timePosted;
 
+    @Column(columnDefinition = "int4 default 0")
     private Integer likes;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"likes"})
-
     private User author;
 
     @JsonIgnoreProperties({"author", "comments"})

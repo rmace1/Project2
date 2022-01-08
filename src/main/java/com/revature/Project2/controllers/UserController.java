@@ -1,8 +1,10 @@
 package com.revature.Project2.controllers;
 
 import com.revature.Project2.models.JsonResponse;
+import com.revature.Project2.models.Post;
 import com.revature.Project2.models.User;
 import com.revature.Project2.models.UserDTO;
+import com.revature.Project2.services.PostService;
 import com.revature.Project2.services.UserService;
 import com.revature.Project2.util.Email;
 import com.revature.Project2.util.FileUtil;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RequestMapping(value = "user")
@@ -19,10 +22,12 @@ import java.util.List;
 @CrossOrigin(value = "http://localhost:4200")
 public class UserController {
     private UserService userService;
+    private PostService postService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @GetMapping
@@ -101,14 +106,24 @@ public class UserController {
     @PutMapping
     public ResponseEntity<JsonResponse> updateUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName,
                                                    @RequestParam String lastName , @RequestParam String userName,
-                                                   @RequestParam String email, @RequestParam(required = false) String password,
-                                                   @RequestParam(value = "profilePic", required = false) String profileImage) {
+                                                   @RequestParam String email, @RequestParam(required = false) String password) {
         User newUser = new User(firstName, lastName, userName, email, password);
-        newUser.setProfilePic(profileImage);
+
         userService.updateUser(newUser, file);
 
 
         return ResponseEntity.ok(new JsonResponse("user created", null));
     }
     //TODO: Add endpoint to add a post to the user's likes list
+    @PatchMapping("{id}/post/{postId}")
+    public void likePost(@PathVariable("id") Integer userId, @PathVariable("postId") Integer postId){
+        User user = userService.getOneUser(userId);
+        Post post = postService.getOnePost(postId);
+        userService.addLike(user, post);
+
+    }
+    /*
+    * INSERT INTO user_post values(1,4);
+    * UPDATE posts SET likes = likes + 1 WHERE id = 4 ;
+    *  */
 }

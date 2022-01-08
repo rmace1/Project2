@@ -49,10 +49,6 @@ public class User {
     )
     private List<Post> likes = new ArrayList<>();
 
-    @Transient
-    private File profileImage;
-
-
     public User(String firstName, String lastName, String userName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
