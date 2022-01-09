@@ -59,7 +59,6 @@ public class UserController {
     public ResponseEntity<JsonResponse> resetPassword(@RequestParam("file") MultipartFile file, @RequestParam String firstName, @RequestParam String lastName
             , @RequestParam String userName, @RequestParam String email, @RequestParam String password) {
 
-        //TODO: upload and save profile image to DB and S3.
         ResponseEntity<JsonResponse> responseEntity;
         //TODO: add password generator potentially
         String newPass = "P4ssw0rd";

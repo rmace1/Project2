@@ -39,7 +39,7 @@ public class PostService {
         return this.postRepo.findAllOriginalPosts();
     }
 
-    public Post updatePost(Post post, MultipartFile multipartFile){
+    public Post updatePost(Post post){
 
         return postRepo.save(post);
     }

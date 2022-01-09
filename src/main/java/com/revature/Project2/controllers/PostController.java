@@ -1,5 +1,6 @@
 package com.revature.Project2.controllers;
 
+import com.revature.Project2.models.JsonResponse;
 import com.revature.Project2.models.Post;
 import com.revature.Project2.services.PostService;
 import com.revature.Project2.services.UserService;
@@ -60,6 +61,22 @@ public class PostController {
     @GetMapping("all-original")
     public List<Post> getAllOriginalPosts(){
         return this.postService.getAllOriginalPosts();
+    }
+
+    @PutMapping
+    public ResponseEntity<JsonResponse> updatePost(@RequestParam("file")MultipartFile file, @RequestParam String message,
+           @RequestParam Integer postId){
+        ResponseEntity responseEntity;
+        Post post = new Post();
+
+        post = postService.getOnePost(postId);
+        post.setMessage(message);
+
+        if(file != null) {
+            post.setPicture(FileUtil.uploadToS3(post.getAuthor(), file));
+        }
+        Post updatedPost = postService.updatePost(post);
+        return responseEntity = ResponseEntity.ok(new JsonResponse("Post with id " + updatedPost.getId() + " was updated", null));
     }
 
     @DeleteMapping("{postId}")
