@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
 
 @NoArgsConstructor
@@ -21,7 +22,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "posts")
-public class Post {
+public class Post implements Comparable<Post> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,4 +58,11 @@ public class Post {
         this.author = author;
     }
 
+    @Override
+    public int compareTo(Post post){
+        if(post.getId() < this.getId()){
+            return 1;
+        }
+        return -1;
+    }
 }

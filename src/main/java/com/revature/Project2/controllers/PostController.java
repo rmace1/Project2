@@ -66,7 +66,6 @@ public class PostController {
     @PutMapping
     public ResponseEntity<JsonResponse> updatePost(@RequestParam(value = "file", required = false)MultipartFile file, @RequestParam String message,
            @RequestParam Integer postId){
-        ResponseEntity responseEntity;
         Post post = new Post();
 
         post = postService.getOnePost(postId);
@@ -76,7 +75,7 @@ public class PostController {
             post.setPicture(FileUtil.uploadToS3(post.getAuthor(), file));
         }
         Post updatedPost = postService.updatePost(post);
-        return responseEntity = ResponseEntity.ok(new JsonResponse("Post with id " + updatedPost.getId() + " was updated", null));
+        return ResponseEntity.ok(new JsonResponse("Post with id " + updatedPost.getId() + " was updated", null));
     }
 
     @DeleteMapping("{postId}")

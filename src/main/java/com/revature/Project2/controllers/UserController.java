@@ -102,14 +102,18 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<JsonResponse> updateUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName,
-                                                   @RequestParam String lastName , @RequestParam String userName,
+                           @RequestParam Integer id, @RequestParam String lastName , @RequestParam String userName,
                                                    @RequestParam String email, @RequestParam(required = false) String password) {
         User newUser = new User(firstName, lastName, userName, email, password);
+        newUser.setId(id);
 
-        userService.updateUser(newUser, file);
+        User user = userService.updateUser(newUser, file);
 
+        if(user == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new JsonResponse("error updating user", user));
+        }
+        return ResponseEntity.ok(new JsonResponse("user updated", user));
 
-        return ResponseEntity.ok(new JsonResponse("user created", null));
     }
 
     @PatchMapping("{id}/post/{postId}")

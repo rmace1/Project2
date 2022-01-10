@@ -25,6 +25,7 @@ public class PropertyConfig {
     private static String userName;
     private static String password;
 
+    //https://stackoverflow.com/questions/10306673/securing-a-password-in-a-properties-file
     public static void updateProperties(){
 
 

@@ -57,7 +57,8 @@ class SessionControllerIT {
         UserDTO userDTO = new UserDTO(user);
         JsonResponse expectedResult = new JsonResponse("login successful", userDTO);
 
-        Mockito.when(this.userService.validateCredentials(credentials)).thenReturn(user);
+        Mockito.when(this.userService.validateCredentials(credentials))
+                .thenReturn(user);
 
         mvc.perform(MockMvcRequestBuilders.post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -69,8 +70,8 @@ class SessionControllerIT {
 
         //assertEquals(userDTO, this.session.getAttribute("user-session"));
 
-        //Test will fail if trying to use an object as the session value
-        Mockito.verify(this.session, Mockito.times(1)).setAttribute("user-session", userDTO);
+        Mockito.verify(this.session, Mockito.times(1))
+                .setAttribute("user-session", userDTO);
     }
 
     @Test

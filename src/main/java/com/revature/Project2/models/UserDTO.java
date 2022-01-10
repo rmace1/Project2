@@ -1,5 +1,7 @@
 package com.revature.Project2.models;
 
+import java.util.Objects;
+
 public class UserDTO {
     private Integer id;
     private String userName;
@@ -75,5 +77,18 @@ public class UserDTO {
                 ", profilePic='" + profilePic + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return id.equals(userDTO.id) && userName.equals(userDTO.userName) && firstName.equals(userDTO.firstName) && lastName.equals(userDTO.lastName) && Objects.equals(profilePic, userDTO.profilePic) && email.equals(userDTO.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, firstName, lastName, profilePic, email);
     }
 }

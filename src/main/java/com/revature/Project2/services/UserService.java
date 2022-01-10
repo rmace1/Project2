@@ -48,7 +48,7 @@ public class UserService {
     }
 
     public User updateUser(User user, MultipartFile multipartFile){
-        User userFromDb = userRepo.findByUserName(user.getUserName());
+        User userFromDb = userRepo.findById(user.getId()).orElse(null);
 
         if(userFromDb == null){
             return null;
