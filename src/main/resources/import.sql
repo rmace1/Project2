@@ -1,8 +1,8 @@
-INSERT INTO users values(DEFAULT, 'rmace1@', 'richard', 'mace', 'pass', NULL, 'rmace1');
-INSERT INTO users values(DEFAULT, 'rmace2@', 'richard', 'mace', 'pass', NULL, 'rmace2');
-INSERT INTO users values(DEFAULT, 'rmace3@', 'richard', 'mace', 'pass', NULL, 'rmace3');
-INSERT INTO users values(DEFAULT, 'rmace4@', 'richard', 'mace', 'pass', NULL, 'rmace4');
-
+INSERT INTO users values(DEFAULT, 'rmace1@', 'richard', 'mace', 'ialDnjRQtMdHjTTwkAmTnZyuoqX5MPPxh0FJ5iDIjBk7BB7XDICH+OMeWqUH8EdD', NULL, 'rmace1');
+INSERT INTO users values(DEFAULT, 'rmace2@', 'richard', 'mace', 'ialDnjRQtMdHjTTwkAmTnZyuoqX5MPPxh0FJ5iDIjBk7BB7XDICH+OMeWqUH8EdD', NULL, 'rmace2');
+INSERT INTO users values(DEFAULT, 'rmace3@', 'richard', 'mace', 'ialDnjRQtMdHjTTwkAmTnZyuoqX5MPPxh0FJ5iDIjBk7BB7XDICH+OMeWqUH8EdD', NULL, 'rmace3');
+INSERT INTO users values(DEFAULT, 'rmace4@', 'richard', 'mace', 'ialDnjRQtMdHjTTwkAmTnZyuoqX5MPPxh0FJ5iDIjBk7BB7XDICH+OMeWqUH8EdD', NULL, 'rmace4');
+/*password= pass123 */
 INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my first post!', NULL, DEFAULT, 1, null);
 INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my wonderful first post!', NULL, DEFAULT, 2, null);
 INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my successful first post!', NULL, DEFAULT, 3, null);

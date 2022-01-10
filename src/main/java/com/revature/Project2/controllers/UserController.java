@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    public User getOneUser(@PathVariable Integer userId) {
-        return this.userService.getOneUser(userId);
+    public UserDTO getOneUser(@PathVariable Integer userId) {
+        return new UserDTO(this.userService.getOneUser(userId));
     }
 
     @DeleteMapping("{userId}")
@@ -54,14 +54,13 @@ public class UserController {
     }
 
     @PatchMapping
-    public ResponseEntity<JsonResponse> resetPassword(@RequestParam("file") MultipartFile file, @RequestParam String firstName, @RequestParam String lastName
-            , @RequestParam String userName, @RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<JsonResponse> resetPassword(@RequestBody User requestBody) {
 
         ResponseEntity<JsonResponse> responseEntity;
         //TODO: add password generator potentially
         String newPass = "P4ssw0rd";
         //check if user is valid
-        User newUser = new User(firstName, lastName, userName, email, password);
+        User newUser = requestBody;
 
         User user = userService.validateCredentials(newUser);
 
@@ -76,7 +75,7 @@ public class UserController {
         user.setPassword(newPass);
 
         //reset password and send email
-        userService.updateUser(user, file);
+        //userService.updateUser(user, file);
         Email.sendEmail(user.getEmail(), "Password Reset",
                 "Your password has been reset to \"" + newPass + "\"");
         UserDTO userDto = new UserDTO(user);

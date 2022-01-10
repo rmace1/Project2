@@ -40,7 +40,7 @@ public class Post {
     private Integer likes;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"likes"})
+    @JsonIgnoreProperties({"likes", "password"})
     private User author;
 
     @JsonIgnoreProperties({"author", "comments"})

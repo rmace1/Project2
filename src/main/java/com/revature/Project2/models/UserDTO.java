@@ -3,13 +3,17 @@ package com.revature.Project2.models;
 public class UserDTO {
     private Integer id;
     private String userName;
-    private String fullName;
+    private String firstName;
+    private String lastName;
+    private String profilePic;
     private String email;
 
     public UserDTO(User user){
         this.id = user.getId();
         this.userName = user.getUserName();
-        this.fullName = user.getFirstName() + " " + user.getLastName();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.profilePic = user.getProfilePic();
         this.email = user.getEmail();
     }
 
@@ -29,12 +33,28 @@ public class UserDTO {
         this.userName = userName;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 
     public String getEmail() {
@@ -50,7 +70,9 @@ public class UserDTO {
         return "UserDTO{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
-                ", fullName='" + fullName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", profilePic='" + profilePic + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

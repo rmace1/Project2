@@ -38,7 +38,7 @@ public class PostController {
     }
 
     @PostMapping
-    public Post createPost(@RequestParam("file")MultipartFile file, @RequestParam String message,
+    public Post createPost(@RequestParam(value = "file", required = false)MultipartFile file, @RequestParam String message,
                            @RequestParam("author") Integer authorId, @RequestParam(required = false) Integer originalPostId){
         Post post = new Post();
 
@@ -64,7 +64,7 @@ public class PostController {
     }
 
     @PutMapping
-    public ResponseEntity<JsonResponse> updatePost(@RequestParam("file")MultipartFile file, @RequestParam String message,
+    public ResponseEntity<JsonResponse> updatePost(@RequestParam(value = "file", required = false)MultipartFile file, @RequestParam String message,
            @RequestParam Integer postId){
         ResponseEntity responseEntity;
         Post post = new Post();
