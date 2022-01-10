@@ -75,7 +75,7 @@ class PostServiceTest {
         posts.add(new Post(2, "Second post!", user));
         posts.add(new Post(3, "Third post!", user));
 
-        Mockito.when(postRepo.findAllUserByauthorId(user.getId())).thenReturn(posts);
+        Mockito.when(postRepo.findAllPostsByUser(user.getId())).thenReturn(posts);
 
         List<Post> actual = postService.getAllPostsGivenUserId(user.getId());
 

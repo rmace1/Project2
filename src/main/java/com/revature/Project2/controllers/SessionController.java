@@ -5,6 +5,7 @@ import com.revature.Project2.models.User;
 import com.revature.Project2.models.UserDTO;
 import com.revature.Project2.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -21,17 +22,18 @@ public class SessionController {
     }
 
     @PostMapping
-    public JsonResponse login(HttpSession httpSession, @RequestBody User requestBody){
+    public ResponseEntity<JsonResponse> login(HttpSession httpSession, @RequestBody User requestBody){
 
         User user = this.userService.validateCredentials(requestBody);
 
         if(user == null) {
-            return new JsonResponse("invalid username or password", null);
+            return ResponseEntity.ok(new JsonResponse("invalid username or password", null));
         }
+        UserDTO userDTO = new UserDTO(user);
+        httpSession.setAttribute("user-session", userDTO);
 
-        httpSession.setAttribute("user-session", new UserDTO(user));
-
-        return new JsonResponse("login successful", new UserDTO(user));
+        //Tests will fail if the value is an object
+        return ResponseEntity.ok(new JsonResponse("login successful", userDTO));
 
     }
 

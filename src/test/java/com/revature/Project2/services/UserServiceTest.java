@@ -1,5 +1,6 @@
 package com.revature.Project2.services;
 
+import com.revature.Project2.models.Post;
 import com.revature.Project2.models.User;
 import com.revature.Project2.repository.PostRepo;
 import com.revature.Project2.repository.UserRepo;
@@ -96,8 +97,10 @@ class UserServiceTest {
 
     @Test
     void updateUser() {
-        User expectedResult = new User("rmace", "richard", "mace", "rmace@rev.net", "Pass123");
-
+        List<Post> likes = new ArrayList<>();
+        User expectedResult = new User(2, "richard", "mace", "rmace2",
+                "rmace2@", null, "pass", likes);
+        Mockito.when(userRepo.findByUserName(expectedResult.getUserName())).thenReturn(expectedResult);
         Mockito.when(userRepo.save(expectedResult)).thenReturn(expectedResult);
 
         User actual = userService.updateUser(expectedResult, null);

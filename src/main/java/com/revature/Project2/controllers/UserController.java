@@ -22,12 +22,10 @@ import java.util.List;
 @CrossOrigin(value = "http://localhost:4200")
 public class UserController {
     private UserService userService;
-    private PostService postService;
 
     @Autowired
-    public UserController(UserService userService, PostService postService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.postService = postService;
     }
 
     @GetMapping
@@ -88,13 +86,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<JsonResponse> registerUser(@RequestParam("file") MultipartFile file, @RequestParam String firstName, @RequestParam String lastName
+    public ResponseEntity<JsonResponse> registerUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName, @RequestParam String lastName
             , @RequestParam String userName, @RequestParam String email, @RequestParam String password) {
 
         User newUser = new User(firstName, lastName, userName, email, password);
 
-        newUser.setProfilePic(FileUtil.uploadToS3(newUser, file));
-
+        if(file != null) {
+            newUser.setProfilePic(FileUtil.uploadToS3(newUser, file));
+        }
         User user = this.userService.createUser(newUser);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new JsonResponse("username already exists in system", null));
@@ -113,16 +112,16 @@ public class UserController {
 
         return ResponseEntity.ok(new JsonResponse("user created", null));
     }
-    //TODO: Add endpoint to add a post to the user's likes list
-    @PatchMapping("{id}/post/{postId}")
-    public void likePost(@PathVariable("id") Integer userId, @PathVariable("postId") Integer postId){
-        User user = userService.getOneUser(userId);
-        Post post = postService.getOnePost(postId);
-        userService.addLike(user, post);
 
+    @PatchMapping("{id}/post/{postId}")
+    public ResponseEntity<JsonResponse> likePost(@PathVariable("id") Integer userId, @PathVariable("postId") Integer postId){
+
+        Boolean liked = userService.addLike(userId, postId);
+
+        if(liked) {
+            return ResponseEntity.ok(new JsonResponse("Post liked successfully.", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new JsonResponse("Post already liked.", null));
+        }
     }
-    /*
-    * INSERT INTO user_post values(1,4);
-    * UPDATE posts SET likes = likes + 1 WHERE id = 4 ;
-    *  */
 }

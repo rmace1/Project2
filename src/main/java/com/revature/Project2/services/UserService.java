@@ -94,12 +94,22 @@ public class UserService {
     }
 
     @Transactional
-    public void addLike(User user, Post post){
+    public Boolean addLike(Integer userId, Integer postId){
+        User user = getOneUser(userId);
+        Post post = postRepo.getById(postId);
+
+        //if the user has not already liked the post
         if(!user.getLikes().contains(post)) {
+            //adds the user/post combination to the user_post table
             user.getLikes().add(post);
             userRepo.save(user);
+
+            //increments the likes value by 1
             post.setLikes(post.getLikes() + 1);
             postRepo.save(post);
+
+            return true;
         }
+        return false;
     }
 }
