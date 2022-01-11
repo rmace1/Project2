@@ -64,11 +64,11 @@ public class FileUtil {
                 .build();
 
         String imageURL = "SocialNetwork/" + user.getUserName() + "/" + multipartFile.getOriginalFilename();
-
+        imageURL = imageURL.replace(' ', '+');
         try{
             s3Client.putObject(new PutObjectRequest(bucketName, imageURL,
                     multipartFile.getInputStream(), new ObjectMetadata()));
-            log.info(multipartFile.getName() + " has beeen uploaded to S3 bucket.");
+            log.info(multipartFile.getName() + " has been uploaded to S3 bucket.");
         } catch (Exception e) {
             log.error(e);
         }

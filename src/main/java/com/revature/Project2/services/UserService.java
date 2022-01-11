@@ -67,6 +67,8 @@ public class UserService {
         //if a file is uploaded as part of the user update
         if(multipartFile != null){
             user.setProfilePic(FileUtil.uploadToS3(user, multipartFile));
+        }else{
+            user.setProfilePic(userFromDb.getProfilePic());
         }
 
         StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
