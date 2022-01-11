@@ -75,10 +75,28 @@ class SessionControllerIT {
     }
 
     @Test
-    void checkSession() {
+    void checkSession() throws Exception {
+        User actualUser = new User("richard", "mace", "rmace", "rmace@gmail.com", "pass123");
+        actualUser.setId(1);
+        UserDTO sessionValue = new UserDTO(actualUser);
+
+        Mockito.when(session.getAttribute("user-session")).thenReturn(sessionValue);
+        UserDTO userDTO = (UserDTO) session.getAttribute("user-session");
+
+        Mockito.when(userService.getOneUser(userDTO.getId())).thenReturn(actualUser);
+
+        User user = userService.getOneUser(userDTO.getId());
+
+        mvc.perform(MockMvcRequestBuilders.get("/session").session(session))
+                .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper()
+                        .writeValueAsString(new JsonResponse("session found", new UserDTO(user)))));
     }
 
     @Test
-    void logout() {
+    void logout() throws Exception {
+
+        mvc.perform((MockMvcRequestBuilders.delete("/session").session(session)))
+                .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper()
+                        .writeValueAsString(new JsonResponse("you have been logged out", null))));
     }
 }

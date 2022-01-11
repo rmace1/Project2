@@ -62,7 +62,7 @@ public class UserController {
         //check if user is valid
         User newUser = requestBody;
 
-        User user = userService.validateCredentials(newUser);
+        User user = userService.getOneUserByUserName(newUser.getUserName());
 
         //if not return json response
         if (user == null) {
@@ -106,6 +106,17 @@ public class UserController {
                                                    @RequestParam String email, @RequestParam(required = false) String password) {
         User newUser = new User(firstName, lastName, userName, email, password);
         newUser.setId(id);
+        Boolean available;
+
+
+        User oldUser = userService.getOneUser(newUser.getId());
+        if(!oldUser.getUserName().equals(newUser.getUserName())){
+            available = this.userService.isUserNameAvailable(newUser.getUserName());
+            if(!available){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new JsonResponse("username already in use", null));
+            }
+        }
+
 
         User user = userService.updateUser(newUser, file);
 

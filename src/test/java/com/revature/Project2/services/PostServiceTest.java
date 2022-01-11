@@ -71,9 +71,15 @@ class PostServiceTest {
     void getAllPostsGivenUserId() {
         User user = new User("Richard", "Mace", "rmace", "rmace@revnet.com", "pass123");
         List<Post> posts = new ArrayList<>();
+        List<Post> commentList = new ArrayList<>();
+
         posts.add(new Post(1, "First post!", user));
         posts.add(new Post(2, "Second post!", user));
         posts.add(new Post(3, "Third post!", user));
+
+        for(Post post: posts){
+            post.setComments(commentList);
+        }
 
         Mockito.when(postRepo.findAllPostsByUser(user.getId())).thenReturn(posts);
 
@@ -86,9 +92,14 @@ class PostServiceTest {
     void getAllOriginalPosts() {
         User user = new User("Richard", "Mace", "rmace", "rmace@revnet.com", "pass123");
         List<Post> posts = new ArrayList<>();
+        List<Post> commentList = new ArrayList<>();
         posts.add(new Post(1, "First post!", user));
         posts.add(new Post(2, "Second post!", user));
         posts.add(new Post(3, "Third post!", user));
+
+        for(Post post: posts){
+            post.setComments(commentList);
+        }
 
         Mockito.when(postRepo.findAllOriginalPosts()).thenReturn(posts);
 

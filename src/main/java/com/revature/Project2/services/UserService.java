@@ -47,6 +47,16 @@ public class UserService {
         return this.userRepo.findById(userId).orElse(null);
     }
 
+    public User getOneUserByUserName(String userName){return this.userRepo.findByUserName(userName);}
+
+    public Boolean isUserNameAvailable(String userName){
+        User user = this.userRepo.findByUserName(userName);
+        if(user == null){
+            return true;
+        }
+        return false;
+    }
+
     public User updateUser(User user, MultipartFile multipartFile){
         User userFromDb = userRepo.findById(user.getId()).orElse(null);
 
