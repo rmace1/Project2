@@ -8,7 +8,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.revature.Project2.models.User;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +32,36 @@ public class FileUtil {
 
         return file;
     }*/
+
+    public static String uploadFile(User user, File file) {
+        Properties config = new Properties();
+        String configName = "./src/main/resources/config.txt";
+        try {
+            config.load(new FileInputStream(configName));
+        } catch (IOException e) {
+            log.error(e);
+        }
+        final String awsID = config.getProperty("AWSPass");
+        final String secretKey = config.getProperty("AWSSecretPass");
+        final String region = "us-east-2";
+        final String bucketName = "jwa-p2";
+        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(awsID, secretKey);
+
+        /*
+         * s3 instance
+         * */
+        AmazonS3 s3Client = AmazonS3ClientBuilder
+                .standard()
+                .withRegion(Regions.fromName(region))
+                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                .build();
+
+        String imageURL = "SocialNetwork/" + user.getUserName() + "/" + file.getName();
+        imageURL = imageURL.replace(' ', '+');
+        //bucket location, URI for file in that location, file to send
+        s3Client.putObject(bucketName, "fromjava/" + file.getName(), file);
+        return configName;
+    }
 
     public static String uploadToS3(User user, MultipartFile multipartFile) {
         Properties config = new Properties();

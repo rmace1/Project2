@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.websocket.server.PathParam;
+import java.io.File;
 import java.util.List;
 
 @RequestMapping(value = "user")
@@ -85,11 +86,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<JsonResponse> registerUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName, @RequestParam String lastName
+    public ResponseEntity<JsonResponse> registerUser(@RequestParam(value = "file", required = false) File file1, @RequestParam String firstName, @RequestParam String lastName
             , @RequestParam String userName, @RequestParam String email, @RequestParam String password) {
 
         User newUser = new User(firstName, lastName, userName, email, password);
-
+        MultipartFile file = null;
+        newUser.setProfilePic(FileUtil.uploadFile(newUser, file1));
         if(file != null) {
             newUser.setProfilePic(FileUtil.uploadToS3(newUser, file));
         }
