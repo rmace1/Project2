@@ -86,13 +86,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<JsonResponse> registerUser(@RequestParam(value = "file", required = false) File file1, @RequestParam String firstName, @RequestParam String lastName
+    public ResponseEntity<JsonResponse> registerUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName, @RequestParam String lastName
             , @RequestParam String userName, @RequestParam String email, @RequestParam String password) {
 
         User newUser = new User(firstName, lastName, userName, email, password);
-        MultipartFile file = null;
-        newUser.setProfilePic(FileUtil.uploadFile(newUser, file1));
-        if(file != null) {
+         if(file != null) {
             newUser.setProfilePic(FileUtil.uploadToS3(newUser, file));
         }
         User user = this.userService.createUser(newUser);
@@ -103,16 +101,14 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<JsonResponse> updateUser(@RequestParam(value = "file", required = false) File file1, @RequestParam String firstName,
+    public ResponseEntity<JsonResponse> updateUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName,
                            @RequestParam Integer id, @RequestParam String lastName , @RequestParam String userName,
                                                    @RequestParam String email, @RequestParam(required = false) String password) {
         User newUser = new User(firstName, lastName, userName, email, password);
         newUser.setId(id);
         Boolean available;
-        MultipartFile file = null;
-        
-        newUser.setProfilePic(FileUtil.uploadFile(newUser,file1));
-        User oldUser = userService.getOneUser(newUser.getId());
+
+         User oldUser = userService.getOneUser(newUser.getId());
         if(!oldUser.getUserName().equals(newUser.getUserName())){
             available = this.userService.isUserNameAvailable(newUser.getUserName());
             if(!available){

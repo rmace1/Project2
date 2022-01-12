@@ -34,6 +34,7 @@ public class FileUtil {
         return file;
     }*/
 
+
     public static String uploadFile(User user, File file)  {
         Properties config = new Properties();
         String configName = "./src/main/resources/config.txt";
@@ -68,9 +69,11 @@ public class FileUtil {
         try{
             s3Client.putObject(new PutObjectRequest(bucketName, imageURL,
                     fis, new ObjectMetadata()));
+            fis.close();
         } catch (Exception e) {
             log.error(e);
         }
+
         return configName;
     }
 
