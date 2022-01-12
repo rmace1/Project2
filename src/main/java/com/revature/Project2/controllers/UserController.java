@@ -76,7 +76,7 @@ public class UserController {
         user.setPassword(newPass);
 
         //reset password and send email
-        //userService.updateUser(user, file);
+        userService.updateUser(user, null);
         Email.sendEmail(user.getEmail(), "Password Reset",
                 "Your password has been reset to \"" + newPass + "\"");
         UserDTO userDto = new UserDTO(user);
@@ -104,11 +104,14 @@ public class UserController {
     public ResponseEntity<JsonResponse> updateUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName,
                            @RequestParam Integer id, @RequestParam String lastName , @RequestParam String userName,
                                                    @RequestParam String email, @RequestParam(required = false) String password) {
+        if(password.equals("undefined")){
+            password = null;
+        }
         User newUser = new User(firstName, lastName, userName, email, password);
         newUser.setId(id);
         Boolean available;
 
-         User oldUser = userService.getOneUser(newUser.getId());
+        User oldUser = userService.getOneUser(newUser.getId());
         if(!oldUser.getUserName().equals(newUser.getUserName())){
             available = this.userService.isUserNameAvailable(newUser.getUserName());
             if(!available){
