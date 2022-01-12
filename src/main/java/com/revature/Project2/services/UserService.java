@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,9 +83,24 @@ public class UserService {
         return userRepo.save(user);
     }
 
+    @Transactional
     public boolean delete(Integer userId){
-        this.userRepo.deleteById(userId);
         User user = this.userRepo.findById(userId).orElse(null);
+        if(user == null){
+            return true;
+        }
+        //removes the users liked posts from the join table
+        user.setLikes(new ArrayList<Post>());
+        userRepo.save(user);
+
+        //deletes the user's posts and comments
+        for(Post post: postRepo.findAllPostsByUser(user.getId())){
+            postRepo.deleteById(post.getId());
+        }
+
+        //delete the user
+        this.userRepo.deleteById(userId);
+        user = this.userRepo.findById(userId).orElse(null);
         if(user == null) {
             return true;
         }

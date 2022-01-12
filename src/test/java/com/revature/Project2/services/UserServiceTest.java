@@ -99,7 +99,7 @@ class UserServiceTest {
     void updateUser() {
         List<Post> likes = new ArrayList<>();
         User expectedResult = new User(2, "richard", "mace", "rmace2",
-                "rmace2@", null, "pass", likes);
+                "rmace2@", null, "pass", likes, likes);
         Mockito.when(userRepo.findById(expectedResult.getId())).thenReturn(Optional.of(expectedResult));
         Mockito.when(userRepo.save(expectedResult)).thenReturn(expectedResult);
 

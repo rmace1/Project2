@@ -1,5 +1,6 @@
 package com.revature.Project2.models;
 
+import java.util.List;
 import java.util.Objects;
 
 public class UserDTO {
@@ -9,6 +10,7 @@ public class UserDTO {
     private String lastName;
     private String profilePic;
     private String email;
+    private List<Post> likes;
 
     public UserDTO(User user){
         this.id = user.getId();
@@ -17,6 +19,15 @@ public class UserDTO {
         this.lastName = user.getLastName();
         this.profilePic = user.getProfilePic();
         this.email = user.getEmail();
+        this.likes = user.getLikes();
+    }
+
+    public List<Post> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Post> likes) {
+        this.likes = likes;
     }
 
     public Integer getId() {

@@ -53,7 +53,7 @@ class SessionControllerIT {
 
         List<Post> likes = new ArrayList<>();
         User user = new User(1, "richard", "mace", "rmace1",
-                "rmace1@", null, "pass123", likes);
+                "rmace1@", null, "pass123", likes, likes);
         UserDTO userDTO = new UserDTO(user);
         JsonResponse expectedResult = new JsonResponse("login successful", userDTO);
 

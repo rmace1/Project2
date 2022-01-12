@@ -32,10 +32,10 @@ class UserRepoIT {
         //If you test a user that has any likes a stack overflow occurs due to an infinite loop between the objects.
         List<Post> likes = new ArrayList<>();
         User expected = new User(2, "richard", "mace", "rmace2",
-                "rmace2@", null, "pass", likes);
+                "rmace2@", null, "pass",likes, likes);
 
         User actual = userRepo.findByUserName("rmace2");
 
-        assertEquals(expected, actual);
+        assertEquals(expected.toString(), actual.toString());
     }
 }

@@ -41,7 +41,7 @@ public class PostController {
     public Post createPost(@RequestParam(value = "file", required = false)MultipartFile file, @RequestParam String message,
                            @RequestParam("author") Integer authorId, @RequestParam(required = false) Integer originalPostId){
         Post post = new Post();
-
+        post.setLikes(0);
         post.setMessage(message);
         post.setAuthor(userService.getOneUser(authorId));
         if(originalPostId != null) {
@@ -49,7 +49,9 @@ public class PostController {
         }
         post.setTimePosted(new Timestamp(System.currentTimeMillis()));
 
-        post.setPicture(FileUtil.uploadToS3(post.getAuthor(), file));
+        if(file != null) {
+            post.setPicture(FileUtil.uploadToS3(post.getAuthor(), file));
+        }
         return this.postService.createPost(post);
     }
 

@@ -40,15 +40,15 @@ public class UserController {
     }
 
     @DeleteMapping("{userId}")
-    public ResponseEntity<JsonResponse> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<JsonResponse> deleteUser(@PathVariable Integer userId) {
         ResponseEntity<JsonResponse> responseEntity;
-
-        if (this.userService.delete(id)) {
+        Boolean deleted = this.userService.delete(userId);
+        if (deleted) {
             responseEntity = ResponseEntity
-                    .ok(new JsonResponse("User with id " + id + " was deleted", null));
+                    .ok(new JsonResponse("User with id " + userId + " was deleted", null));
         } else {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new JsonResponse("There is not a user with id " + id, null));
+                    .body(new JsonResponse("There is not a user with id " + userId, null));
         }
 
         return responseEntity;
@@ -76,7 +76,10 @@ public class UserController {
         user.setPassword(newPass);
 
         //reset password and send email
-        userService.updateUser(user, null);
+        User updatedUser = userService.updateUser(user, null);
+        if(updatedUser == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new JsonResponse("Password unable to be reset.", null));
+        }
         Email.sendEmail(user.getEmail(), "Password Reset",
                 "Your password has been reset to \"" + newPass + "\"");
         UserDTO userDto = new UserDTO(user);

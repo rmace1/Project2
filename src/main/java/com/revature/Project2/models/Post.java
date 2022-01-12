@@ -31,6 +31,9 @@ public class Post implements Comparable<Post> {
     @Column(nullable = false)
     private String message;
 
+    @Transient
+    private Boolean liked = false;
+
     private String picture;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm az")
@@ -40,16 +43,16 @@ public class Post implements Comparable<Post> {
     @Column(columnDefinition = "int4 default 0")
     private Integer likes;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"likes", "password"})
     private User author;
 
     @JsonIgnoreProperties({"author", "comments"})
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "original_post_id")
     private Post originalPost;
 
-    @OneToMany(mappedBy = "originalPost")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "originalPost")
     private List<Post> comments;
 
     public Post(Integer id, String message, User author) {
@@ -64,5 +67,17 @@ public class Post implements Comparable<Post> {
             return 1;
         }
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", liked=" + liked +
+                ", picture='" + picture + '\'' +
+                ", timePosted=" + timePosted +
+                ", likes=" + likes +
+                '}';
     }
 }
