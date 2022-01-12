@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -33,7 +34,7 @@ public class FileUtil {
         return file;
     }*/
 
-    public static String uploadFile(User user, File file) {
+    public static String uploadFile(User user, File file)  {
         Properties config = new Properties();
         String configName = "./src/main/resources/config.txt";
         try {
@@ -55,11 +56,21 @@ public class FileUtil {
                 .withRegion(Regions.fromName(region))
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
                 .build();
-
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         String imageURL = "SocialNetwork/" + user.getUserName() + "/" + file.getName();
         imageURL = imageURL.replace(' ', '+');
         //bucket location, URI for file in that location, file to send
-        s3Client.putObject(bucketName, "fromjava/" + file.getName(), file);
+        try{
+            s3Client.putObject(new PutObjectRequest(bucketName, imageURL,
+                    fis, new ObjectMetadata()));
+        } catch (Exception e) {
+            log.error(e);
+        }
         return configName;
     }
 
