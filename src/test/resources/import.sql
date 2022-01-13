@@ -8,6 +8,18 @@ INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my wonderful first post!', N
 INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my successful first post!', NULL, DEFAULT, 3, null);
 INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my guaranteed first post!', NULL, DEFAULT, 4, null);
 INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my lovely second post!', NULL, DEFAULT, 1, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my wonderful first post!', NULL, DEFAULT, 2, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my successful first post!', NULL, DEFAULT, 3, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my guaranteed first post!', NULL, DEFAULT, 4, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my lovely second post!', NULL, DEFAULT, 1, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my wonderful first post!', NULL, DEFAULT, 2, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my successful first post!', NULL, DEFAULT, 3, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my guaranteed first post!', NULL, DEFAULT, 4, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my lovely second post!', NULL, DEFAULT, 1, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my wonderful first post!', NULL, DEFAULT, 2, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my successful first post!', NULL, DEFAULT, 3, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my guaranteed first post!', NULL, DEFAULT, 4, null);
+INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my lovely second post!', NULL, DEFAULT, 1, null);
 INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my first about my own comment!', NULL, DEFAULT, 1, 1);
 INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my first lovely comment!', NULL, DEFAULT, 3, 1);
 INSERT INTO posts values(DEFAULT, DEFAULT, 'this is my first gorgeous comment!', NULL, DEFAULT, 2, 1);

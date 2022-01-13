@@ -32,7 +32,7 @@ class PostRepoIT {
 
         posts = postRepo.findAllPostsByUser(1);
 
-        assertEquals(2, posts.size());
+        assertEquals(5, posts.size());
     }
 
     @Test
@@ -41,6 +41,6 @@ class PostRepoIT {
 
         posts = postRepo.findAllOriginalPosts();
 
-        assertEquals(5, posts.size());
+        assertEquals(17, posts.size());
     }
 }

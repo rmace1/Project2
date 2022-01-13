@@ -128,26 +128,27 @@ class UserControllerIT {
 
     @Test
     void registerUser() throws Exception {
-        User credentials = new User();
-        credentials.setPassword("pass");
-        credentials.setUserName("rmace12");
-        credentials.setFirstName("richard");
-        credentials.setLastName("mace");
-        credentials.setEmail("rmace12@");
+        User newUser = new User();
+        newUser.setPassword("pass");
+        newUser.setUserName("rmace12");
+        newUser.setFirstName("richard");
+        newUser.setLastName("mace");
+        newUser.setEmail("rmace12@");
+        newUser.setProfilePic("https://jwa-p2.s3.us-east-2.amazonaws.com/SocialNetwork/avatar-default-square.jpg");
 
         List<Post> likes = new ArrayList<>();
-        User user = new User(12, "richard", "mace", "rmace12",
+        User user = new User(1, "richard", "mace", "rmace12",
                 "rmace127@", null, "pass123", likes, likes);
         JsonResponse expectedResult = new JsonResponse("user created", user);
 
-        Mockito.when(this.userService.createUser(credentials)).thenReturn(user);
+        Mockito.when(this.userService.createUser(newUser)).thenReturn(user);
 
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/user").param("firstName", credentials.getFirstName())
-                .param("lastName", credentials.getLastName())
-                .param("userName", credentials.getUserName())
-                .param("email", credentials.getEmail())
-                .param("password", credentials.getPassword())
+                .post("/user").param("firstName", newUser.getFirstName())
+                .param("lastName", newUser.getLastName())
+                .param("userName", newUser.getUserName())
+                .param("email", newUser.getEmail())
+                .param("password", newUser.getPassword())
                 .contentType(MediaType.MULTIPART_FORM_DATA);
 
 
