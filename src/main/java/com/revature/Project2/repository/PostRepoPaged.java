@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostRepoPaged extends PagingAndSortingRepository<Post, Integer> {
-    @Query(value = "SELECT * FROM posts p WHERE p.original_post_id IS null", nativeQuery = true)
+    @Query(value = "SELECT * FROM posts p WHERE p.original_post_id IS null ORDER BY p.id DESC", nativeQuery = true)
     Page<Post> findAllOriginalPostsPaged(Pageable pageable);
 }

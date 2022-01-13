@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -79,14 +80,12 @@ public class PostService {
     public List<Post> findAllPostsPaginated(int pageNo, int pageSize){
         Pageable paging = PageRequest.of(pageNo, pageSize);
         Page<Post> pagedResult = this.postRepoPaged.findAllOriginalPostsPaged(paging);
-        if(pagedResult.isEmpty()){
+
+        if(pagedResult.isEmpty() && pageNo >= 9999){
             return getAllOriginalPosts();
         }
         return pagedResult.toList();
 
     }
 
-    /*
-    * First previous next last
-    * */
 }
