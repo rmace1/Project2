@@ -90,4 +90,10 @@ public class PostController {
         }
         return responseEntity;
     }
+
+    @GetMapping("/paged/{pageNo}/{pageSize}")
+    public List<Post> getPaginatedPosts(@PathVariable Integer pageNo
+            , @PathVariable Integer pageSize){
+        return this.postService.findAllPostsPaginated(pageNo, pageSize);
+    }
 }

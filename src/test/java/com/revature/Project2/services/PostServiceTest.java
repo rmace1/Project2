@@ -3,6 +3,7 @@ package com.revature.Project2.services;
 import com.revature.Project2.models.Post;
 import com.revature.Project2.models.User;
 import com.revature.Project2.repository.PostRepo;
+import com.revature.Project2.repository.PostRepoPaged;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,10 +18,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class PostServiceTest {
     PostService postService;
     PostRepo postRepo = Mockito.mock(PostRepo.class);
+    PostRepoPaged postRepoPaged = Mockito.mock(PostRepoPaged.class);
 
     @BeforeEach
     void setUp() {
-        postService = new PostService(postRepo);
+        postService = new PostService(postRepo, postRepoPaged);
 
     }
 

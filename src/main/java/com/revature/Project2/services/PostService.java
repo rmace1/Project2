@@ -2,8 +2,12 @@ package com.revature.Project2.services;
 
 import com.revature.Project2.models.Post;
 import com.revature.Project2.repository.PostRepo;
+import com.revature.Project2.repository.PostRepoPaged;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -14,10 +18,12 @@ public class PostService {
     private Logger log = Logger.getLogger(PostService.class);
 
     private PostRepo postRepo;
+    private PostRepoPaged postRepoPaged;
 
     @Autowired
-    public PostService(PostRepo postRepo){
+    public PostService(PostRepo postRepo, PostRepoPaged postRepoPaged){
         this.postRepo = postRepo;
+        this.postRepoPaged = postRepoPaged;
     }
 
     public Post createPost(Post post){
@@ -68,4 +74,19 @@ public class PostService {
             return true;
         return false;
     }
+
+
+    public List<Post> findAllPostsPaginated(int pageNo, int pageSize){
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        Page<Post> pagedResult = this.postRepoPaged.findAllOriginalPostsPaged(paging);
+        if(pagedResult.isEmpty()){
+            return getAllOriginalPosts();
+        }
+        return pagedResult.toList();
+
+    }
+
+    /*
+    * First previous next last
+    * */
 }
