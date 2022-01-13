@@ -95,7 +95,9 @@ public class UserController {
         User newUser = new User(firstName, lastName, userName, email, password);
          if(file != null) {
             newUser.setProfilePic(FileUtil.uploadToS3(newUser, file));
-        }
+        }else{
+             newUser.setProfilePic("https://jwa-p2.s3.us-east-2.amazonaws.com/SocialNetwork/avatar-default-square.jpg");
+         }
         User user = this.userService.createUser(newUser);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new JsonResponse("username already exists in system", null));
