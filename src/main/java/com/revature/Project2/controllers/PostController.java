@@ -16,7 +16,7 @@ import java.util.List;
 
 @RequestMapping(value = "post")
 @RestController
-@CrossOrigin(value = "http://localhost:4200")
+@CrossOrigin(value = "http://3.21.168.108:4200")
 public class PostController {
     private PostService postService;
     private UserService userService;
