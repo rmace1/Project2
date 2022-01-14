@@ -45,8 +45,15 @@ The config.txt contains the AWS credentials for the S3 bucket.
 ## Usage
 
 >  The frontend repository url is: https://github.com/echen45/Angular2
+>
+>  After cloning the frontend repository, you need to build it using the "ng build" command while inside the directory.
 
->  After cloning the repository, you need to run the mvn verify command to build the .jar file.
+>  The automated end to end test repository url is: https://github.com/EianBaier/CucumberProject2
+>
+>  After cloning the cucumber repository you can open and run the project.
+
+
+>  After cloning the SocialNetwork repository, you need to run the "mvn verify" command to build the .jar file while inside the directory.
 
 ## Contributors
 
