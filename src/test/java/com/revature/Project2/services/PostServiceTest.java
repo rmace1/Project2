@@ -127,7 +127,9 @@ class PostServiceTest {
         User user = new User("Richard", "Mace", "rmace", "rmace@revnet.com", "pass123");
         Post post = new Post(1, "First post!", user);
 
-        Boolean deleted = postService.deletePost(post.getId());
+        Mockito.when(this.postRepo.findById(post.getId())).thenReturn(Optional.ofNullable(null));
+
+        Boolean deleted = postService.delete(post.getId());
 
         assertTrue(deleted);
 

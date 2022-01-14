@@ -10,6 +10,13 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 
+    /**
+     * Sends an email to the given recipient with the given subject line and message
+     * @param recipient The email address of the recipient.
+     * @param subjectLine The subject line of the email.
+     * @param messageToSend The email's message.
+     * @return Returns true if the email logic encountered no problems.
+     */
     public static boolean sendEmail(String recipient, String subjectLine, String messageToSend) {
         // Recipient's email ID needs to be mentioned.
         String to = recipient;

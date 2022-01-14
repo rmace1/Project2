@@ -15,6 +15,9 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Contains the implementation for the methods in relation to the User model.
+ */
 @Service
 @Transactional
 public class UserService {
@@ -27,6 +30,11 @@ public class UserService {
         this.postRepo = postRepo;
     }
 
+    /**
+     * Creates a new user with the provided information.
+     * @param user The user object containing the information.
+     * @return The newly created user object or null if the information is not valid.
+     */
     public User createUser(User user){
         User userFromDb = this.userRepo.findByUserName(user.getUserName());
         if(userFromDb != null)
@@ -40,16 +48,35 @@ public class UserService {
         return this.userRepo.save(user);
     }
 
+    /**
+     * Returns the entire list of users from the database.
+     * @return A list of all users.
+     */
     public List<User> getAllUsers(){
         return this.userRepo.findAll();
     }
 
+    /**
+     * Returns a user object from the database given an id.
+     * @param userId The id of the user object to be retrieved.
+     * @return The user if they exist, will be null if they do not.
+     */
     public User getOneUser(Integer userId){
         return this.userRepo.findById(userId).orElse(null);
     }
 
+    /**
+     * Returns a user object from the database given a username.
+     * @param userName The username of the user object to be retrieved.
+     * @return The user if they exist, will be null if they do not.
+     */
     public User getOneUserByUserName(String userName){return this.userRepo.findByUserName(userName);}
 
+    /**
+     * Checks to see if a username is in use.
+     * @param userName The name that is checked.
+     * @return Returns true if the username is available for use.
+     */
     public Boolean isUserNameAvailable(String userName){
         User user = this.userRepo.findByUserName(userName);
         if(user == null){
@@ -58,6 +85,13 @@ public class UserService {
         return false;
     }
 
+    /**
+     * Updates the user's information in the database with what is passed, if no password or file is passed the existing
+     * information will be used.
+     * @param user The new user information to be saved to the database.
+     * @param multipartFile The user profile picture they want to use.
+     * @return
+     */
     public User updateUser(User user, MultipartFile multipartFile){
         User userFromDb = userRepo.findById(user.getId()).orElse(null);
 
@@ -83,6 +117,11 @@ public class UserService {
         return userRepo.save(user);
     }
 
+    /**
+     * Deletes the user and all of their posts and liked posts from the database.
+     * @param userId The id of the user to be deleted.
+     * @return Returns true if the user no longer exists, false if the user object still remains in the database.
+     */
     @Transactional
     public boolean delete(Integer userId){
         User user = this.userRepo.findById(userId).orElse(null);
@@ -107,6 +146,11 @@ public class UserService {
         return false;
     }
 
+    /**
+     * Validates that the passed user credentials match what exist in the database.
+     * @param user The passed user credentials.
+     * @return The user object from the database that has matching username/password combination.
+     */
     public User validateCredentials(User user){
         User userFromDb = this.userRepo.findByUserName(user.getUserName());
 
@@ -121,6 +165,13 @@ public class UserService {
         return userFromDb;
     }
 
+    /**
+     * Adds the post to the list of user's liked posts.
+     * @param userId The id of the user who liked the post.
+     * @param postId The id of the post that is liked.
+     * @return Will return true if the post is added to the table and its number of likes is incremented successfully,
+     *  will return false if the post has already been liked.
+     */
     @Transactional
     public Boolean addLike(Integer userId, Integer postId){
         User user = getOneUser(userId);

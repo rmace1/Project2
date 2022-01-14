@@ -25,6 +25,9 @@ public class PropertyConfig {
     private static String userName;
     private static String password;
 
+    /**
+     * Updates the application.properties fields with the appropriate fields from the config.txt file.
+     */
     //https://stackoverflow.com/questions/10306673/securing-a-password-in-a-properties-file
     public static void updateProperties(){
 
