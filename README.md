@@ -36,18 +36,22 @@ To-do list:
 ## Getting Started
    
 git clone https://github.com/rmace1/SocialNetwork
+
 The application.properties contains the information to connect to the database.
+
 The config.txt contains the AWS credentials for the S3 bucket.
 
 
 ## Usage
 
 >  The frontend repository url is: https://github.com/echen45/Angular2
+
 >  After cloning the repository, you need to run the mvn verify command to build the .jar file.
 
 ## Contributors
 
-> Eian Baier, 
+> Eian Baier
+>
 > Eric Chen
 
  
