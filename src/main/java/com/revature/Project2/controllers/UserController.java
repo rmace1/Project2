@@ -18,6 +18,9 @@ import javax.websocket.server.PathParam;
 import java.io.File;
 import java.util.List;
 
+/**
+ * A controller that deals with manipulating users.
+ */
 @RequestMapping(value = "user")
 @RestController
 @CrossOrigin(value = "http://3.21.168.108:4200")
@@ -29,16 +32,30 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * An endpoint that returns all users.
+     * @return A list of users.
+     */
     @GetMapping
     public List<User> getAllUsers() {
         return this.userService.getAllUsers();
     }
 
+    /**
+     * An endpoint to return a single user
+     * @param userId The id of the user.
+     * @return A UserDTO object for the given user
+     */
     @GetMapping("{userId}")
     public UserDTO getOneUser(@PathVariable Integer userId) {
         return new UserDTO(this.userService.getOneUser(userId));
     }
 
+    /**
+     * The endpoint to delete a user.
+     * @param userId The id of the user.
+     * @return A JsonResponse with a message detailing the method's completion
+     */
     @DeleteMapping("{userId}")
     public ResponseEntity<JsonResponse> deleteUser(@PathVariable Integer userId) {
         ResponseEntity<JsonResponse> responseEntity;
@@ -54,6 +71,11 @@ public class UserController {
         return responseEntity;
     }
 
+    /**
+     * This endpoint will reset the user's password and send an email to the address.
+     * @param requestBody The user object inside the Http request body.
+     * @return A JsonResponse wth a message and potentially a userDto object.
+     */
     @PatchMapping
     public ResponseEntity<JsonResponse> resetPassword(@RequestBody User requestBody) {
 
@@ -88,6 +110,16 @@ public class UserController {
         return responseEntity;
     }
 
+    /**
+     * The endpoint for registering, or creating, a user with the provided information.
+     * @param file The user profile image, optional.
+     * @param firstName The user's first name.
+     * @param lastName The user's last name.
+     * @param userName The user's desired username.
+     * @param email The user's email address.
+     * @param password The user's plaintext email password.
+     * @return A JsonResponse that contains a message and the user object.
+     */
     @PostMapping
     public ResponseEntity<JsonResponse> registerUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName, @RequestParam String lastName
             , @RequestParam String userName, @RequestParam String email, @RequestParam String password) {
@@ -105,6 +137,17 @@ public class UserController {
         return ResponseEntity.ok(new JsonResponse("user created", user));
     }
 
+    /**
+     * The endpoint for updating a user's information
+     * @param file The profile picture for the user, optional if not given will be updated.
+     * @param firstName The user's first name.
+     * @param id The id of the user.
+     * @param lastName The user's last name.
+     * @param userName The user's username.
+     * @param email The user's email address.
+     * @param password The user's plaintext password, optional if not given will not be updated.
+     * @return A JsonResponse with a message and a user object if it is successful.
+     */
     @PutMapping
     public ResponseEntity<JsonResponse> updateUser(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam String firstName,
                            @RequestParam Integer id, @RequestParam String lastName , @RequestParam String userName,
@@ -134,6 +177,12 @@ public class UserController {
 
     }
 
+    /**
+     * This endpoint used to specify when a user likes a post
+     * @param userId The id of the user who like the post.
+     * @param postId The id of the post liked.
+     * @return A response detailing if the post was liked or if it was already liked.
+     */
     @PatchMapping("{id}/post/{postId}")
     public ResponseEntity<JsonResponse> likePost(@PathVariable("id") Integer userId, @PathVariable("postId") Integer postId){
 
