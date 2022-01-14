@@ -17,6 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Handles uploading a file to the S3 bucket.
+ */
 public class FileUtil {
 
     private static Logger log = Logger.getLogger(FileUtil.class);

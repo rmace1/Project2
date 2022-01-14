@@ -17,6 +17,10 @@ jdbcUserName=
 jdbcPassword=
 jdbcDbName=
 * */
+
+/**
+ * Contains the logic to update the application properties from the config text file.
+ */
 public class PropertyConfig {
     private static Properties config = new Properties();
     private static String configName = "./src/main/resources/config.txt";

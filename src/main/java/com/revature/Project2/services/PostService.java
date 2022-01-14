@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Contains the implementation for the methods in relation to the Post model.
+ */
 @Service
 public class PostService {
     private Logger log = Logger.getLogger(PostService.class);
