@@ -16,7 +16,7 @@ In this social network, everyone is friends with everyone. As a user, you will b
 * AWS EC2
 * AWS RDS
 * AWS S3
-* Jascypt
+* Jasypt
 
 ## Features
 
