@@ -13,6 +13,10 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping(value = "session")
 @CrossOrigin(origins = "http://3.21.168.108:4200", allowCredentials = "true")
+
+/**
+ * Contains the methods related to sessions
+ */
 public class SessionController {
     private UserService userService;
 
@@ -21,6 +25,11 @@ public class SessionController {
         this.userService = userService;
     }
 
+    /**
+     * Logs a user in and creates a session.
+     * @param httpSession and requestBody The HttpSession object and http request body.
+     * @return The ResponseEntity object with the response body a Json object.
+     */
     @PostMapping
     public ResponseEntity<JsonResponse> login(HttpSession httpSession, @RequestBody User requestBody){
 
@@ -37,6 +46,11 @@ public class SessionController {
 
     }
 
+    /**
+     * Checks if a session exists.
+     * @param httpSession The HttpSession object, which represents the user's session.
+     * @return A Json object, which is the response body.
+     */
     @GetMapping
     public JsonResponse checkSession(HttpSession httpSession){
         UserDTO userDTO = (UserDTO) httpSession.getAttribute("user-session");
@@ -51,6 +65,11 @@ public class SessionController {
 
     }
 
+    /**
+     * Logs a user out and destroys the session.
+     * @param httpSession The HttpSession object.
+     * @return A Json object.
+     */
     @DeleteMapping
     public JsonResponse logout(HttpSession httpSession){
         httpSession.invalidate();
